@@ -21,5 +21,4 @@ public class FlightManagement {
         FlightDAOImpl fdi = new FlightDAOImpl();
         fdi.createALayout();
     }
-
 }

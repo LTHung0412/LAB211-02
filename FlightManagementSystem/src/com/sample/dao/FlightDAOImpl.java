@@ -47,7 +47,7 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
         if (loginCheck) {
             add();
         } else if (!loginCheck) {
-            System.out.println("You have no authority to access this.");
+            System.out.println("You have no authority to access this function.");
         }
 
     }
@@ -64,18 +64,17 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
                 if (index == -1 && flightNum.matches(flightNumPattern)) {
                     check = false;
                 }
-                String departCity = Utils.getString("Input departure city: ");
-                String destiCity = Utils.getString("Input destination city: ");
-                String departTime = Utils.getDate("Input departure time: ", "MM/dd/yyyy");
-                String arrivalTime = Utils.getDate("Input arrival time: ", "MM/dd/yyyy");
-                int avaiableSeats = Utils.getInt("Input available seats: ", 1, 100);
-                this.add(new Flight(destiCity, departCity, destiCity, departTime, arrivalTime, avaiableSeats));
-
-                quit = Utils.confirmYesNo("Do you want to continue add (Y or N): ");
             } while (check);
 
-        } while (quit);
+            String departCity = Utils.getString("Input departure city: ");
+            String destiCity = Utils.getString("Input destination city: ");
+            String departTime = Utils.getDate("Input departure time: ", "MM/dd/yyyy");
+            String arrivalTime = Utils.getDate("Input arrival time: ", "MM/dd/yyyy");
+            int avaiableSeats = Utils.getInt("Input available seats: ", 1, 100);
+            this.add(new Flight(flightNum, departCity, destiCity, departTime, arrivalTime, avaiableSeats));
 
+            quit = Utils.confirmYesNo("Do you want to continue add (Y or N): ");
+        } while (quit);
     }
 
     public int find(String num) {
@@ -94,14 +93,13 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
     public void passengerReservationAndBooking() {
         if (!loginCheck) {
             List<Flight> availableFlights = findAvailableFlights();
-            displayFlightInfor(availableFlights);
             if (!availableFlights.isEmpty()) {
+                displayFlightInfor(availableFlights);
                 makeReservation(availableFlights);
             }
         } else if (loginCheck) {
-            System.out.println("You have no authority to access this.");
+            System.out.println("You have no authority to access this function.");
         }
-
     }
 
     public List<Flight> findAvailableFlights() {
@@ -119,28 +117,36 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
     }
 
     public void makeReservation(List<Flight> availableFlights) {
+        System.out.println("Please choose your flight to make the reservation: ");
+        int index;
         for (Flight f : availableFlights) {
-            int i = 1;
-            System.out.println(i + ". " + "Flight: " + f.getNumber());
+            index = 1;
+            System.out.println(index + ". " + "Flight: " + f.getNumber());
+            index++;
         }
         int choice = Utils.getInt("Input choice: ", 1, availableFlights.size());
-        this.get(choice - 1).setBookedSeats(this.get(choice - 1).getBookedSeats() - 1);
+        //this.get(choice - 1).setBookedSeats(this.get(choice - 1).getBookedSeats() + 1);
+        this.get(choice - 1).bookSeat();
 
         String passengerName = Utils.getString("Input name: ");
         String passengerContactDetail = Utils.getString("Input contact detail: ");
+        Passenger nPassenger = new Passenger(passengerName, passengerContactDetail);
+        passengerList.add(nPassenger);
+        //this.get(choice - 1).setPassenger(this.get(choice - 1).getBookedSeats() - 1, nPassenger);
+
         String reservationID = "";
         reservationID += "R";
-        int end_code = availableFlights.size() + 1;
+        int end_code = reservationList.size() + 1;
         int number_zero = 4 - (end_code + "").length();
         for (int i = 1; i <= number_zero; i++) {
             reservationID += "0";
         }
         reservationID += end_code;
 
-        Passenger nPassenger = new Passenger(passengerName, passengerContactDetail);
-        passengerList.add(nPassenger);
         Reservation nReservation = new Reservation(nPassenger, this.get(choice - 1), reservationID);
         reservationList.add(nReservation);
+
+        System.out.println(nPassenger + " ,ReservationID = " + reservationID + "}");
     }
 //==============================================================================
 
@@ -149,71 +155,89 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
         if (!loginCheck) {
             passengerCheckInFlights();
         } else if (loginCheck) {
-            System.out.println("You have no authority to access this.");
+            System.out.println("You have no authority to access this function.");
         }
     }
 
     private void passengerCheckInFlights() {
-        String providedPassengerName = Utils.getString("Input your name: ");
-        String providedReservationID = Utils.getString("Ïnput reservation ID for checking: ");
+        boolean check = true;
+        String providedPassengerName, providedReservationID;
+        do {
+            providedPassengerName = Utils.getString("Input your name: ");
+            providedReservationID = Utils.getString("Ïnput reservation ID for checking: ");
+            for (Reservation r : reservationList) {
+                if ((r.getPassenger().getName().equals(providedPassengerName) && !r.getReservationID().equals(providedReservationID))
+                        || r.getFlight().findPassenger(r.getPassenger(), r) == -1) {
+                    //System.out.println(r.getPassenger().getName() + r.getReservationID());
+                    check = false;
+                    break;
+                }
+            }
+            if (!check) {
+                System.out.println("You have inputted wrong your NAME or your RESERVATION ID. Please input again: ");
+            }
+        } while (!check);
+
         for (Reservation r : reservationList) {
             if (r.getPassenger().getName().equals(providedPassengerName) && r.getReservationID().equals(providedReservationID)) {
-                System.out.println(r.getFlight().getNumber());
+                //System.out.println(r.getFlight().getNumber());
                 BoardingPass newBoardingPass = new BoardingPass(r.getPassenger(), r.getFlight());
                 boardingPassList.add(newBoardingPass);
+                allocateSeats(r.getPassenger(), r.getFlight());
             }
-            allocateSeats(r.getPassenger(), r.getFlight());
         }
     }
 
     private void allocateSeats(Passenger p, Flight f) {
         Passenger[] pList = f.getPassengerSeats();
         List<String> optionsList = new ArrayList<>();
-        for (int i = 0; i < f.getPassengerSeats().length - 3; i += 4) {
+        System.out.println("\t-----FLIGHT: " + f.getNumber() + " -----");
+        for (int i = 0; i < f.getAvailableSeats() - 3; i += 4) {
             Passenger p1 = pList[i], p2 = pList[i + 1], p3 = pList[i + 2], p4 = pList[i + 3];
             String s1 = "", s2 = "", s3 = "", s4 = "";
-            if (p1 != null) {
+            if (p1 == null) {
                 s1 = String.format("%d", i + 1);
                 optionsList.add(s1);
             } else {
                 s1 = "X";
             }
-            if (p2 != null) {
+            if (p2 == null) {
                 s2 = String.format("%d", i + 2);
                 optionsList.add(s2);
             } else {
                 s2 = "X";
             }
-            if (p3 != null) {
+            if (p3 == null) {
                 s3 = String.format("%d", i + 3);
                 optionsList.add(s3);
             } else {
                 s3 = "X";
             }
-            if (p4 != null) {
+            if (p4 == null) {
                 s4 = String.format("%d", i + 4);
                 optionsList.add(s4);
             } else {
                 s4 = "X";
             }
-            String output = String.format("\t[%s] [%s]\t[%s] [%s]", s1, s2, s3, s4);
+            String output = String.format("\t[%s]\t[%s]\t[%s]\t[%s]", s1, s2, s3, s4);
             System.out.println(output);
         }
 
-        boolean choiceCheck = true;
-        String choice;
+        boolean choiceCheck = false;
+        String seatChoice;
         do {
-            choice = Utils.getString("Input seat number: ");
+            seatChoice = Utils.getString("Input seat number: ");
             for (String s : optionsList) {
-                if (choice.equals(s)) {
+                if (seatChoice.equals(s)) {
                     System.out.println("Choose successfully !!!");
-                    pList[Integer.parseInt(choice)] = p;
+                    pList[Integer.parseInt(seatChoice) - 1] = p;
+                    choiceCheck = true;
                     break;
                 }
             }
-            System.out.println("Invalid seat !!!");
-            choiceCheck = false;
-
+            if (!choiceCheck) {
+                System.out.println("Invalid seat !!!");
+            }
         } while (!choiceCheck);
     }
 //==============================================================================
@@ -223,7 +247,7 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
         if (loginCheck) {
             addCrewAssignments();
         } else if (!loginCheck) {
-            System.out.println("You have no authority to access this.");
+            System.out.println("You have no authority to access this function.");
         }
     }
 
@@ -247,18 +271,19 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
     }
 
     private void login() {
-        boolean check = true;
+        boolean check = false;
         String loginChoice = Utils.getString("Do you want to login as Admin/User (A/U): ");
         if (loginChoice.toUpperCase().equals("A")) {
             do {
                 String logPassWord = Utils.getString("Input password: ");
                 if (logPassWord.equals(admin.getPassword()) && admin.isAdmin()) {
                     loginCheck = true;
+                    System.out.println("Login with adminstator successfully !!!");
                 } else if (!logPassWord.equals(admin.getPassword())) {
                     System.out.println("Incorrect password !!!");
                     check = Utils.confirmYesNo("Do you want to continue login (Y/N): ");
                 }
-            } while (!check);
+            } while (check);
 
         } else if (loginChoice.toUpperCase().equals("U")) {
             loginCheck = false;
@@ -266,7 +291,6 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
     }
 
     public void displayFlightInfor(List<Flight> listFlight) {
-        listFlight = new ArrayList<>(this);
         Collections.sort(listFlight, Comparator.comparing((Flight p) -> p.getArrivalTime()).reversed());
         for (Flight f : listFlight) {
             System.out.println(f);
@@ -300,7 +324,7 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
                 Logger.getLogger(FlightDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (!loginCheck) {
-            System.out.println("You have no authority to access this.");
+            System.out.println("You have no authority to access this function.");
         }
     }
 
