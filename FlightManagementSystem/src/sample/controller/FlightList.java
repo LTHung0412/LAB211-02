@@ -103,7 +103,10 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
         if (!loginCheck) {
             List<Flight> availableFlights = findAvailableFlights();
             if (!availableFlights.isEmpty()) {
-                displayFlightInfor(availableFlights);
+                for(Flight f:availableFlights)
+                {
+                    System.out.println(f);
+                }
                 makeReservation(availableFlights);
             }
         } else if (loginCheck) {
