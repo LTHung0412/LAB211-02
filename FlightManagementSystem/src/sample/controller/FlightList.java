@@ -10,7 +10,6 @@ import sample.model.CrewAssignment;
 import sample.model.Flight;
 import sample.model.Passenger;
 import sample.model.Reservation;
-import sample.model.User;
 import sample.utils.Utils;
 import java.io.EOFException;
 import java.io.File;
@@ -282,9 +281,9 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
         } catch (IOException ex) {
             Logger.getLogger(FlightList.class.getName()).log(Level.SEVERE, null, ex);
         }
-}
+    }
 
-public void load() throws IOException {
+    public void load() throws IOException {
         File file = new File(fileName);
         if (file.exists()) {
 
@@ -297,20 +296,17 @@ public void load() throws IOException {
             ObjectInputStream ois = new ObjectInputStream(fis);
             while (true) {
                 try {
-                    List<Flight> loadedFlight = new ArrayList<>();
-                    loadedFlight = (List<Flight>) ois.readObject();
+                    List<Flight> loadedFlight = (List<Flight>) ois.readObject();
                     for (int i = 0; i < loadedFlight.size(); i++) {
                         this.set(i, loadedFlight.get(i));
                     }
 
-                    List<Reservation> loadedReservation = new ArrayList<>();
-                    loadedReservation = (List<Reservation>) ois.readObject();
+                    List<Reservation> loadedReservation = (List<Reservation>) ois.readObject();
                     for (int i = 0; i < loadedReservation.size(); i++) {
                         reservationList.set(i, loadedReservation.get(i));
                     }
 
-                    List<CrewAssignment> loadedCrewAssignment = new ArrayList<>();
-                    loadedCrewAssignment = (List<CrewAssignment>) ois.readObject();
+                    List<CrewAssignment> loadedCrewAssignment = (List<CrewAssignment>) ois.readObject();
                     for (int i = 0; i < loadedCrewAssignment.size(); i++) {
                         crewAssignmentList.set(i, loadedCrewAssignment.get(i));
                     }
