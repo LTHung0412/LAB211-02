@@ -173,42 +173,27 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
     private void allocateSeats(Passenger p, Flight f) {
         Passenger[] pList = f.getPassengerSeats();
         List<String> optionsList = new ArrayList<>();
-        System.out.println("\t-----FLIGHT: " + f.getNumber() + " -----");
-        for (int i = 0; i < f.getAvailableSeats() - 3; i += 4) {
-            Passenger p1 = pList[i], p2 = pList[i + 1], p3 = pList[i + 2], p4 = pList[i + 3];
-            String s1 = "", s2 = "", s3 = "", s4 = "";
-            if (p1 == null) {
-                s1 = String.format("%d", i + 1);
-                optionsList.add(s1);
+        System.out.print("\t-----FLIGHT: " + f.getNumber() + " -----");
+        for (int i = 0; i < f.getAvailableSeats(); i++) {
+            Passenger passenger = pList[i];
+            String s = "";
+            if (passenger == null) {
+                s = String.format("%d", i + 1);
+                optionsList.add(s);
             } else {
-                s1 = "X";
+                s = "X";
             }
-            if (p2 == null) {
-                s2 = String.format("%d", i + 2);
-                optionsList.add(s2);
+            if ((i + 1) % 4 == 1) {
+                System.out.print(String.format("\n\t[%s]", s));
             } else {
-                s2 = "X";
+                System.out.print(String.format("\t[%s]", s));
             }
-            if (p3 == null) {
-                s3 = String.format("%d", i + 3);
-                optionsList.add(s3);
-            } else {
-                s3 = "X";
-            }
-            if (p4 == null) {
-                s4 = String.format("%d", i + 4);
-                optionsList.add(s4);
-            } else {
-                s4 = "X";
-            }
-            String output = String.format("\t[%s]\t[%s]\t[%s]\t[%s]", s1, s2, s3, s4);
-            System.out.println(output);
         }
 
         boolean choiceCheck = false;
         String seatChoice;
         do {
-            seatChoice = Utils.getString("Input seat number: ");
+            seatChoice = Utils.getString("\nInput seat number: ");
             for (String s : optionsList) {
                 if (seatChoice.equals(s)) {
                     System.out.println("Choose successfully !!!");
