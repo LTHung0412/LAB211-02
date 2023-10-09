@@ -29,9 +29,8 @@ public class FlightManagement {
         menu.addItem("2. Passenger reservation and booking.");
         menu.addItem("3. Passenger check-in and seat allocation.");
         menu.addItem("4. Crew management and assignments (ADMIN ONLY).");
-        menu.addItem("5. Administrator access for system management.");
-        menu.addItem("6. Data storage for flight details, reservations, and assignments (ADMIN ONLY).");
-        menu.addItem("7. Quit.");
+        menu.addItem("5. Data storage for flight details, reservations, and assignments (ADMIN ONLY).");
+        menu.addItem("6. Quit.");
         int choice;
         boolean cont = false;
         do {
@@ -52,12 +51,9 @@ public class FlightManagement {
                     flightList.crewManagementAndAssignments();
                     break;
                 case 5:
-                    flightList.administratorAccessForSystemManagement();
-                    break;
-                case 6:
                     flightList.save();
                     break;
-                case 7:
+                case 6:
                     cont = menu.confirmYesNo("Do you want to quit? (Y/N)");
                     break;
             }
