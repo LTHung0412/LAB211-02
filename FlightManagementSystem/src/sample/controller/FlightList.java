@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sample.dao;
+package sample.controller;
 
-import com.sample.model.BoardingPass;
-import com.sample.model.CrewAssignment;
-import com.sample.model.Flight;
-import com.sample.model.Passenger;
-import com.sample.model.Reservation;
-import com.sample.model.User;
-import com.sample.utils.Utils;
+import sample.model.BoardingPass;
+import sample.model.CrewAssignment;
+import sample.model.Flight;
+import sample.model.Passenger;
+import sample.model.Reservation;
+import sample.model.User;
+import sample.utils.Utils;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,19 +26,20 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sample.dto.I_FlightList;
 
 /**
  *
  * @author LENOVO
  */
-public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
+public class FlightList extends ArrayList<Flight> implements I_FlightList {
 
     List<Passenger> passengerList = new ArrayList<>();
     List<Reservation> reservationList = new ArrayList<>();
     List<BoardingPass> boardingPassList = new ArrayList<>();
     List<CrewAssignment> crewAssignmentList = new ArrayList<>();
     User admin = new User("admin@123", true);
-    
+
     boolean loginCheck = false;
     String fileName = "Product.dat";
 
@@ -309,7 +310,7 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
                 try {
                     file.createNewFile();
                 } catch (IOException ex) {
-                    Logger.getLogger(FlightDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FlightList.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             try {
@@ -322,9 +323,9 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
 
                 System.out.println("Save to file successfully !!!");
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(FlightDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FlightList.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(FlightDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FlightList.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (!loginCheck) {
             System.out.println("You have no authority to access this function.");
@@ -344,17 +345,20 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
             ObjectInputStream ois = new ObjectInputStream(fis);
             while (true) {
                 try {
-                    List<Flight> loadedFlight = (List<Flight>) ois.readObject();
+                    List<Flight> loadedFlight = new ArrayList<>();
+                    loadedFlight = (List<Flight>) ois.readObject();
                     for (int i = 0; i < loadedFlight.size(); i++) {
                         this.set(i, loadedFlight.get(i));
                     }
 
-                    List<Reservation> loadedReservation = (List<Reservation>) ois.readObject();
+                    List<Reservation> loadedReservation = new ArrayList<>();
+                    loadedReservation = (List<Reservation>) ois.readObject();
                     for (int i = 0; i < loadedReservation.size(); i++) {
                         reservationList.set(i, loadedReservation.get(i));
                     }
 
-                    List<CrewAssignment> loadedCrewAssignment = (List<CrewAssignment>) ois.readObject();
+                    List<CrewAssignment> loadedCrewAssignment = new ArrayList<>();
+                    loadedCrewAssignment = (List<CrewAssignment>) ois.readObject();
                     for (int i = 0; i < loadedCrewAssignment.size(); i++) {
                         crewAssignmentList.set(i, loadedCrewAssignment.get(i));
                     }
@@ -365,64 +369,5 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
                 }
             }
         }
-    }
-
-//==============================================================================
-    @Override
-    public void createALayout() {
-        List<String> menu = new ArrayList<>();
-        menu.add("1. Flight schedule management (ADMIN ONLY).");
-        menu.add("2. Passenger reservation and booking.");
-        menu.add("3. Passenger check-in and seat allocation.");
-        menu.add("4. Crew management and assignments (ADMIN ONLY).");
-        menu.add("5. Administrator access for system management.");
-        menu.add("6. Data storage for flight details, reservations, and assignments (ADMIN ONLY).");
-        menu.add("7. Quit.");
-        int choice;
-        boolean cont = false;
-        do {
-            System.out.println("========== FLIGHT MANAGEMENT SYSTEM ==========");
-            showMenu(menu);
-            choice = getChoice(menu);
-            switch (choice) {
-                case 1:
-                    flightSchelduleManagement();
-                    break;
-                case 2:
-                    passengerReservationAndBooking();
-                    break;
-                case 3:
-                    passengerCheckInAndSeatAllocation();
-                    break;
-                case 4:
-                    crewManagementAndAssignments();
-                    break;
-                case 5:
-                    administratorAccessForSystemManagement();
-                    break;
-                case 6:
-                    save();
-                    break;
-                case 7:
-                    cont = confirmYesNo("Do you want to quit? (Y/N)");
-                    break;
-            }
-        } while (!cont);
-    }
-
-    public int getChoice(List<String> menu) {
-        return Utils.getInt("Input your choice: ", 1, menu.size());
-    }
-
-    public void showMenu(List<String> menu) {
-        for (int i = 0; i < menu.size(); i++) {
-            System.out.println(menu.get(i));
-        }
-    }
-
-    public boolean confirmYesNo(String welcome) {
-        boolean result = false;
-        result = Utils.confirmYesNo(welcome);
-        return result;
     }
 }

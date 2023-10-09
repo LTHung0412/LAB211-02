@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sample.model;
+package sample.model;
+
+import java.io.Serializable;
 
 /**
  *
  * @author LENOVO
  */
-public class Reservation {
+public class Reservation implements Serializable{
 
     private Passenger passenger;
     private Flight flight;

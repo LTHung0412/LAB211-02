@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sample.dao;
+package sample.dto;
 
 /**
  *
  * @author LENOVO
  */
-public interface FlightDAO {
+public interface I_FlightList {
 
     void flightSchelduleManagement();
 
@@ -22,6 +22,4 @@ public interface FlightDAO {
     void administratorAccessForSystemManagement();
 
     void save();
-
-    void createALayout();
 }

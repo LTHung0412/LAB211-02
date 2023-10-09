@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sample.model;
+package sample.model;
+
+import java.io.Serializable;
 
 /**
  *
  * @author LENOVO
  */
-public class CrewAssignment {
+public class CrewAssignment implements Serializable {
 
     private Flight flight;
     private int pilots;
@@ -54,5 +56,5 @@ public class CrewAssignment {
     public void setGroundStaff(int groundStaff) {
         this.groundStaff = groundStaff;
     }
-    
+
 }
