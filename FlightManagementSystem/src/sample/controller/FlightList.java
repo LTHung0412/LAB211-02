@@ -109,14 +109,12 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
             index++;
         }
         int choice = Utils.getInt("Input choice: ", 1, availableFlights.size());
-        //this.get(choice - 1).setBookedSeats(this.get(choice - 1).getBookedSeats() + 1);
-        this.get(choice - 1).bookSeat();
+        availableFlights.get(choice - 1).bookSeat();
 
         String passengerName = Utils.getString("Input name: ");
         String passengerContactDetail = Utils.getString("Input contact detail: ");
         Passenger nPassenger = new Passenger(passengerName, passengerContactDetail);
         passengerList.add(nPassenger);
-        //this.get(choice - 1).setPassenger(this.get(choice - 1).getBookedSeats() - 1, nPassenger);
 
         String reservationID = "";
         reservationID += "R";
@@ -127,7 +125,7 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
         }
         reservationID += end_code;
 
-        Reservation nReservation = new Reservation(nPassenger, this.get(choice - 1), reservationID);
+        Reservation nReservation = new Reservation(nPassenger, availableFlights.get(choice - 1), reservationID);
         reservationList.add(nReservation);
 
         System.out.println(nPassenger + " ,ReservationID = " + reservationID);
@@ -160,7 +158,6 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
             providedReservationID = Utils.getString("Ïnput reservation ID for checking: ");
             for (Reservation r : reservationList) {
                 if (r.getReservationID().equals(providedReservationID)) {
-                    //System.out.println(r.getFlight().getNumber());
                     BoardingPass newBoardingPass = new BoardingPass(r.getPassenger(), r.getFlight());
                     boardingPassList.add(newBoardingPass);
                     allocateSeats(r.getPassenger(), r.getFlight());
@@ -245,6 +242,7 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
                     int nGroundStaffs = Utils.getInt("Input number of ground staffs (MAX=20): ", 1, 10);
                     CrewAssignment nCrewAssignment = new CrewAssignment(f, nPilots, nFlightAttendants, nGroundStaffs);
                     crewAssignmentList.add(nCrewAssignment);
+                    System.out.println("Create crew assignments successfully !!!");
                 }
             }
             if (!hasFound) {
@@ -294,28 +292,30 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
 
         if (file.length() > 0) {
             ObjectInputStream ois = new ObjectInputStream(fis);
+            List<Flight> loadedFlightList = new ArrayList<>();
+            List<Reservation> loadedReservationList = new ArrayList<>();
+            List<CrewAssignment> loadedCrewAssignmentList = new ArrayList<>();
             while (true) {
                 try {
-                    List<Flight> loadedFlight = (List<Flight>) ois.readObject();
-                    for (int i = 0; i < loadedFlight.size(); i++) {
-                        this.set(i, loadedFlight.get(i));
-                    }
+                    loadedFlightList = (List<Flight>) ois.readObject();
 
-                    List<Reservation> loadedReservation = (List<Reservation>) ois.readObject();
-                    for (int i = 0; i < loadedReservation.size(); i++) {
-                        reservationList.set(i, loadedReservation.get(i));
-                    }
+                    loadedReservationList = (List<Reservation>) ois.readObject();
 
-                    List<CrewAssignment> loadedCrewAssignment = (List<CrewAssignment>) ois.readObject();
-                    for (int i = 0; i < loadedCrewAssignment.size(); i++) {
-                        crewAssignmentList.set(i, loadedCrewAssignment.get(i));
-                    }
+                    loadedCrewAssignmentList = (List<CrewAssignment>) ois.readObject();
+
                 } catch (ClassNotFoundException e) {
                     System.out.println(e);
                 } catch (EOFException e) {
                     break;
                 }
             }
+
+            this.clear();
+            this.addAll(loadedFlightList);
+            reservationList.clear();
+            reservationList = loadedReservationList;
+            crewAssignmentList.clear();
+            crewAssignmentList = loadedCrewAssignmentList;
         }
     }
 }
