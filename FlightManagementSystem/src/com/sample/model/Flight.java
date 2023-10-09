@@ -5,11 +5,13 @@
  */
 package com.sample.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author LENOVO
  */
-public class Flight {
+public class Flight implements Serializable {
 
     private String number;  //Fxxxx (Ex: F0001)
     private String departureCity;

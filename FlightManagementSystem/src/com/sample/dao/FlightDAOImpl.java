@@ -38,6 +38,7 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
     List<BoardingPass> boardingPassList = new ArrayList<>();
     List<CrewAssignment> crewAssignmentList = new ArrayList<>();
     User admin = new User("admin@123", true);
+    
     boolean loginCheck = false;
     String fileName = "Product.dat";
 
@@ -299,7 +300,7 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
 //==============================================================================
 
     @Override
-    public void saveData() {
+    public void save() {
         if (loginCheck) {
             File file = new File(fileName);
             if (file.exists()) {
@@ -314,9 +315,11 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
             try {
                 FileOutputStream fos = new FileOutputStream(file);
                 ObjectOutputStream oos = new ObjectOutputStream(fos);
-                for (Flight f : this) {
-                    oos.writeObject(f);
-                }
+
+                oos.writeObject(this);
+                oos.writeObject(reservationList);
+                oos.writeObject(crewAssignmentList);
+
                 System.out.println("Save to file successfully !!!");
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(FlightDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -328,7 +331,7 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
         }
     }
 
-    public void loadFlightInfor() throws IOException {
+    public void load() throws IOException {
         File file = new File(fileName);
         if (file.exists()) {
 
@@ -341,19 +344,30 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
             ObjectInputStream ois = new ObjectInputStream(fis);
             while (true) {
                 try {
-                    Flight nFlight = (Flight) ois.readObject();
-                    this.add(nFlight);
+                    List<Flight> loadedFlight = (List<Flight>) ois.readObject();
+                    for (int i = 0; i < loadedFlight.size(); i++) {
+                        this.set(i, loadedFlight.get(i));
+                    }
+
+                    List<Reservation> loadedReservation = (List<Reservation>) ois.readObject();
+                    for (int i = 0; i < loadedReservation.size(); i++) {
+                        reservationList.set(i, loadedReservation.get(i));
+                    }
+
+                    List<CrewAssignment> loadedCrewAssignment = (List<CrewAssignment>) ois.readObject();
+                    for (int i = 0; i < loadedCrewAssignment.size(); i++) {
+                        crewAssignmentList.set(i, loadedCrewAssignment.get(i));
+                    }
                 } catch (ClassNotFoundException e) {
                     System.out.println(e);
                 } catch (EOFException e) {
                     break;
                 }
-
             }
         }
     }
-//==============================================================================
 
+//==============================================================================
     @Override
     public void createALayout() {
         List<String> menu = new ArrayList<>();
@@ -387,7 +401,7 @@ public class FlightDAOImpl extends ArrayList<Flight> implements FlightDAO {
                     administratorAccessForSystemManagement();
                     break;
                 case 6:
-                    saveData();
+                    save();
                     break;
                 case 7:
                     cont = confirmYesNo("Do you want to quit? (Y/N)");

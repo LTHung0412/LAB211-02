@@ -21,7 +21,7 @@ public interface FlightDAO {
 
     void administratorAccessForSystemManagement();
 
-    void saveData();
+    void save();
 
     void createALayout();
 }
