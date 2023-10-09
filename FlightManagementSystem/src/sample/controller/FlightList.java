@@ -38,9 +38,6 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
     List<Reservation> reservationList = new ArrayList<>();
     List<BoardingPass> boardingPassList = new ArrayList<>();
     List<CrewAssignment> crewAssignmentList = new ArrayList<>();
-    User admin = new User("admin@123", true);
-
-    boolean loginCheck = false;
     String fileName = "Product.dat";
 
 //------------------------------------------------------------------------------
@@ -54,11 +51,7 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
 
     @Override
     public void flightSchelduleManagement() {
-        if (loginCheck) {
-            add();
-        } else if (!loginCheck) {
-            System.out.println("You have no authority to access this function.");
-        }
+        add();
     }
 
     public void add() {
@@ -100,17 +93,12 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
 //==============================================================================
     @Override
     public void passengerReservationAndBooking() {
-        if (!loginCheck) {
-            List<Flight> availableFlights = findAvailableFlights();
-            if (!availableFlights.isEmpty()) {
-                for(Flight f:availableFlights)
-                {
-                    System.out.println(f);
-                }
-                makeReservation(availableFlights);
+        List<Flight> availableFlights = findAvailableFlights();
+        if (!availableFlights.isEmpty()) {
+            for (Flight f : availableFlights) {
+                System.out.println(f);
             }
-        } else if (loginCheck) {
-            System.out.println("You have no authority to access this function.");
+            makeReservation(availableFlights);
         }
     }
 
@@ -163,11 +151,7 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
 //==============================================================================
     @Override
     public void passengerCheckInAndSeatAllocation() {
-        if (!loginCheck) {
-            passengerCheckInFlights();
-        } else if (loginCheck) {
-            System.out.println("You have no authority to access this function.");
-        }
+        passengerCheckInFlights();
     }
 
     private void passengerCheckInFlights() {
@@ -247,11 +231,7 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
 //==============================================================================
     @Override
     public void crewManagementAndAssignments() {
-        if (loginCheck) {
-            addCrewAssignments();
-        } else if (!loginCheck) {
-            System.out.println("You have no authority to access this function.");
-        }
+        addCrewAssignments();
     }
 
     public void addCrewAssignments() {
@@ -274,68 +254,37 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
         } while (!hasFound);
 
     }
+
 //==============================================================================
-
-    @Override
-    public void administratorAccessForSystemManagement() {
-        login();
-    }
-
-    private void login() {
-        boolean check = false;
-        String loginChoice = Utils.getString("Do you want to login as Admin/User (A/U): ");
-        if (loginChoice.toUpperCase().equals("A")) {
-            do {
-                String logPassWord = Utils.getString("Input password: ");
-                if (logPassWord.equals(admin.getPassword()) && admin.isAdmin()) {
-                    loginCheck = true;
-                    System.out.println("Login with adminstator successfully !!!");
-                } else if (!logPassWord.equals(admin.getPassword())) {
-                    System.out.println("Incorrect password !!!");
-                    check = Utils.confirmYesNo("Do you want to continue login (Y/N): ");
-                }
-            } while (check);
-
-        } else if (loginChoice.toUpperCase().equals("U")) {
-            System.out.println("Login with user successfully !!!");
-            loginCheck = false;
-        }
-    }
-//==============================================================================
-
     @Override
     public void save() {
-        if (loginCheck) {
-            File file = new File(fileName);
-            if (file.exists()) {
+        File file = new File(fileName);
+        if (file.exists()) {
 
-            } else {
-                try {
-                    file.createNewFile();
-                } catch (IOException ex) {
-                    Logger.getLogger(FlightList.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+        } else {
             try {
-                FileOutputStream fos = new FileOutputStream(file);
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-                oos.writeObject(this);
-                oos.writeObject(reservationList);
-                oos.writeObject(crewAssignmentList);
-
-                System.out.println("Save to file successfully !!!");
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(FlightList.class.getName()).log(Level.SEVERE, null, ex);
+                file.createNewFile();
             } catch (IOException ex) {
                 Logger.getLogger(FlightList.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (!loginCheck) {
-            System.out.println("You have no authority to access this function.");
         }
-    }
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-    public void load() throws IOException {
+            oos.writeObject(this);
+            oos.writeObject(reservationList);
+            oos.writeObject(crewAssignmentList);
+
+            System.out.println("Save to file successfully !!!");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FlightList.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FlightList.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
+
+public void load() throws IOException {
         File file = new File(fileName);
         if (file.exists()) {
 

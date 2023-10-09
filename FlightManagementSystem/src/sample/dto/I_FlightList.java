@@ -19,7 +19,5 @@ public interface I_FlightList {
 
     void crewManagementAndAssignments();
 
-    void administratorAccessForSystemManagement();
-
     void save();
 }
