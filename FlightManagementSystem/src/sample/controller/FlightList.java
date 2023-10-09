@@ -240,9 +240,9 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
             for (Flight f : this) {
                 if (f.getNumber().equals(nFlightNum)) {
                     hasFound = true;
-                    int nPilots = Utils.getInt("Ïnput number of pilots: ", 1, 10);
-                    int nFlightAttendants = Utils.getInt("Input number of flight attendants: ", 1, 10);
-                    int nGroundStaffs = Utils.getInt("Input number of ground staffs: ", 1, 10);
+                    int nPilots = Utils.getInt("Ïnput number of pilots (MAX=2): ", 1, 2);
+                    int nFlightAttendants = Utils.getInt("Input number of flight attendants (MAX=10): ", 1, 10);
+                    int nGroundStaffs = Utils.getInt("Input number of ground staffs (MAX=20): ", 1, 10);
                     CrewAssignment nCrewAssignment = new CrewAssignment(f, nPilots, nFlightAttendants, nGroundStaffs);
                     crewAssignmentList.add(nCrewAssignment);
                 }

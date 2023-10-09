@@ -5,11 +5,13 @@
  */
 package sample.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author LENOVO
  */
-public class BoardingPass {
+public class BoardingPass implements Serializable{
     private Passenger passenger;
     private Flight flight;
 
