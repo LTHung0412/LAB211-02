@@ -109,7 +109,7 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
             index++;
         }
         int choice = Utils.getInt("Input choice: ", 1, availableFlights.size());
-        availableFlights.get(choice - 1).bookSeat();
+        //availableFlights.get(choice - 1).bookSeat();
 
         String passengerName = Utils.getString("Input name: ");
         String passengerContactDetail = Utils.getString("Input contact detail: ");
@@ -173,8 +173,8 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
     private void allocateSeats(Passenger p, Flight f) {
         Passenger[] pList = f.getPassengerSeats();
         List<String> optionsList = new ArrayList<>();
-        System.out.print("\t-----FLIGHT: " + f.getNumber() + " -----");
-        for (int i = 0; i < f.getAvailableSeats(); i++) {
+        System.out.print("\t-----FLIGHT: " + f.getNumber() + "-----");
+        for (int i = 0; i < f.getSeatSize(); i++) {
             Passenger passenger = pList[i];
             String s = "";
             if (passenger == null) {
@@ -190,23 +190,25 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
             }
         }
 
-        boolean choiceCheck = false;
-        String seatChoice;
-        do {
-            seatChoice = Utils.getString("\nInput seat number: ");
-            for (String s : optionsList) {
-                if (seatChoice.equals(s)) {
-                    System.out.println("Choose successfully !!!");
-                    pList[Integer.parseInt(seatChoice) - 1] = p;
-                    choiceCheck = true;
-                    break;
+        if (f.checkSeatAvailability()) {
+            boolean choiceCheck = false;
+            String seatChoice;
+            do {
+                seatChoice = Utils.getString("\nInput seat number: ");
+                for (String s : optionsList) {
+                    if (seatChoice.equals(s)) {
+                        System.out.println("Choose successfully !!!");
+                        pList[Integer.parseInt(seatChoice) - 1] = p;
+                        f.bookSeat();
+                        choiceCheck = true;
+                        break;
+                    }
                 }
-            }
-            if (!choiceCheck) {
-                System.out.println("Invalid seat !!!");
-            }
-        } while (!choiceCheck);
-
+                if (!choiceCheck) {
+                    System.out.println("Invalid seat !!!");
+                }
+            } while (!choiceCheck);
+        }
     }
 
 //==============================================================================
@@ -283,9 +285,7 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
             while (true) {
                 try {
                     loadedFlightList = (List<Flight>) ois.readObject();
-
                     loadedReservationList = (List<Reservation>) ois.readObject();
-
                     loadedCrewAssignmentList = (List<CrewAssignment>) ois.readObject();
 
                 } catch (ClassNotFoundException e) {

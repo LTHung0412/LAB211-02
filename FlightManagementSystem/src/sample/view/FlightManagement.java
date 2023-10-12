@@ -30,7 +30,8 @@ public class FlightManagement {
         menu.addItem("3. Passenger check-in and seat allocation.");
         menu.addItem("4. Crew management and assignments.");
         menu.addItem("5. Data storage for flight details, reservations, and assignments.");
-        menu.addItem("6. Quit.");
+        menu.addItem("6. Print all Flight information: ");
+        menu.addItem("7. Quit.");
         int choice;
         boolean cont = false;
         do {
@@ -54,6 +55,9 @@ public class FlightManagement {
                     flightList.save();
                     break;
                 case 6:
+                    flightList.displayFlightInfor(flightList);
+                    break;
+                case 7:
                     cont = menu.confirmYesNo("Do you want to quit? (Y/N)");
                     break;
             }

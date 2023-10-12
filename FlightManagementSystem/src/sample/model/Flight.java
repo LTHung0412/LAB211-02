@@ -18,22 +18,22 @@ public class Flight implements Serializable {
     private String destinationCity;
     private String departureTime;
     private String arrivalTime;
-    private int availableSeats;
+    private int seatSize;
     private int bookedSeats;
     private Passenger[] passengerSeats;
 
     public Flight() {
     }
 
-    public Flight(String number, String departureCity, String destinationCity, String departureTime, String arrivalTime, int availableSeats) {
+    public Flight(String number, String departureCity, String destinationCity, String departureTime, String arrivalTime, int seatSize) {
         this.number = number;
         this.departureCity = departureCity;
         this.destinationCity = destinationCity;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
-        this.availableSeats = availableSeats;
+        this.seatSize = seatSize;
         this.bookedSeats = 0;
-        passengerSeats = new Passenger[availableSeats];
+        passengerSeats = new Passenger[seatSize];
     }
 
     public String getNumber() {
@@ -76,13 +76,15 @@ public class Flight implements Serializable {
         this.arrivalTime = arrivalTime;
     }
 
-    public int getAvailableSeats() {
-        return availableSeats;
+    public int getSeatSize() {
+        return seatSize;
     }
 
-    public void setAvailableSeats(int availableSeats) {
-        this.availableSeats = availableSeats;
+    public void setSeatSize(int seatSize) {
+        this.seatSize = seatSize;
     }
+
+   
 
     public int getBookedSeats() {
         return bookedSeats;
@@ -101,7 +103,7 @@ public class Flight implements Serializable {
     }
 
     public boolean checkSeatAvailability() {
-        if (bookedSeats < availableSeats) {
+        if (bookedSeats < seatSize) {
             return true;
         } else {
             return false;
@@ -128,6 +130,6 @@ public class Flight implements Serializable {
 
     @Override
     public String toString() {
-        return "Flight{" + "number = " + number + ", departureCity = " + departureCity + ", destinationCity = " + destinationCity + ", departureTime = " + departureTime + ", arrivalTime = " + arrivalTime + ", availableSeats = " + availableSeats;
+        return "Flight{" + "number = " + number + ", departureCity = " + departureCity + ", destinationCity = " + destinationCity + ", departureTime = " + departureTime + ", arrivalTime = " + arrivalTime + ", seatSize = " + seatSize+", bookedSeats = "+bookedSeats+"}";
     }
 }
