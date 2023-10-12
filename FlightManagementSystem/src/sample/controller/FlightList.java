@@ -69,8 +69,8 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
 
             String departCity = Utils.getString("Input departure city: ");
             String destiCity = Utils.getString("Input destination city: ");
-            String departTime = Utils.getDate("Input departure time (MM/dd/yyyy): ", "MM/dd/yyyy");
-            String arrivalTime = Utils.getDate("Input arrival time (MM/dd/yyyy): ", "MM/dd/yyyy");
+            String departTime = Utils.getDate("Input departure time (MM/dd/yyyy-HH:mm): ", "MM/dd/yyyy-HH:mm");
+            String arrivalTime = Utils.getDate("Input arrival time (MM/dd/yyyy-HH:mm): ", "MM/dd/yyyy-HH:mm");
             int avaiableSeats = Utils.getInt("Input available seats: ", 1, 100);
             this.add(new Flight(flightNum, departCity, destiCity, departTime, arrivalTime, avaiableSeats));
 
@@ -156,18 +156,21 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
         String providedReservationID;
         do {
             providedReservationID = Utils.getString("Ïnput reservation ID for checking: ");
+            boolean hasFound = false;
             for (Reservation r : reservationList) {
                 if (r.getReservationID().equals(providedReservationID)) {
                     BoardingPass newBoardingPass = new BoardingPass(r.getPassenger(), r.getFlight());
                     boardingPassList.add(newBoardingPass);
                     allocateSeats(r.getPassenger(), r.getFlight());
-                    check = true;
+                    System.out.println("Passenger Check-in successfully !!!");
+                    hasFound = true;
                 }
             }
-            if (!check) {
-                check = Utils.confirmYesNo("Not found reservation ID. Do you want to continue input again (Y/N): ");
+            if (!hasFound) {
+                System.out.println("Not find Reservation ID !!!");
             }
-        } while (!check);
+            check = Utils.confirmYesNo("Do you want to continue check-in again (Y/N): ");
+        } while (check);
     }
 
     private void allocateSeats(Passenger p, Flight f) {
@@ -218,8 +221,9 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
     }
 
     public void addCrewAssignments() {
-        boolean hasFound = false;
+        boolean check = false;
         do {
+            boolean hasFound = false;
             String nFlightNum = Utils.getString("Input flight number: ");
             for (Flight f : this) {
                 if (f.getNumber().equals(nFlightNum)) {
@@ -233,9 +237,9 @@ public class FlightList extends ArrayList<Flight> implements I_FlightList {
                 }
             }
             if (!hasFound) {
-                hasFound = Utils.confirmYesNo("Do you want to continue adding Crew Assignments (Y/N): ");
+                check = Utils.confirmYesNo("Cannot find Flight !!!. \nDo you want to continue adding Crew Assignments (Y/N): ");
             }
-        } while (!hasFound);
+        } while (check);
 
     }
 

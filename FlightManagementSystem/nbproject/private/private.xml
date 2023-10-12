@@ -13,8 +13,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/controller/FlightList.java</file>
+            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/model/Passenger.java</file>
+            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/model/CrewAssignment.java</file>
             <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/model/Flight.java</file>
-            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/model/BoardingPass.java</file>
+            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/model/Reservation.java</file>
             <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/utils/Utils.java</file>
             <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/view/FlightManagement.java</file>
         </group>

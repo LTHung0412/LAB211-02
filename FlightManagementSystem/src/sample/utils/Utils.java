@@ -5,53 +5,59 @@
  */
 package sample.utils;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author LENOVO
  */
 public class Utils {
+
     public static String getDate(String welcome, String dateFormat) {
-        DateFormat sdf = new SimpleDateFormat(dateFormat);
-        sdf.setLenient(false);
-
-        boolean check;
+        boolean validDate = false;
         String result = "";
-        do {
-            check = true;
-            result = getString(welcome);
-            try {
-                sdf.parse(result);
-            } catch (ParseException e) {
-                check = false;
-                System.err.println("Incorrect date ! Please enter again !");
-            }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
 
-        } while (!check);
+        Scanner scanner = new Scanner(System.in);
+
+        do {
+            try {
+                System.out.print(welcome);
+                result = scanner.nextLine();
+                LocalDate.parse(result, formatter); // Attempt to parse the input as a date
+                validDate = true;
+            } catch (Exception e) {
+                System.err.println("Incorrect date! Please enter again!");
+            }
+        } while (!validDate);
+
         return result;
     }
 
-    public static String getDate(String welcome, String oldData, String dateFormat) {
-        DateFormat sdf = new SimpleDateFormat(dateFormat);
-        sdf.setLenient(false);
-
-        boolean check;
+    public static String getDate(String welcome, String dateFormat, String oldData) {
+        boolean validDate = false;
         String result = "";
-        do {
-            check = true;
-            result = getString(welcome, oldData);
-            try {
-                sdf.parse(result);
-            } catch (ParseException e) {
-                check = false;
-                System.err.println("Incorrect date ! Please enter again !");
-            }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
+        Scanner scanner = new Scanner(System.in);
 
-        } while (!check);
+        do {
+            try {
+                System.out.print(welcome);
+                String input = scanner.nextLine();
+                if (input.isEmpty()) {
+                    result = oldData; // Keep the old date if input is empty
+                } else {
+                    result = input;
+                    LocalDate.parse(result, formatter); // Attempt to parse the input as a date
+                }
+                validDate = true;
+            } catch (Exception e) {
+                System.err.println("Incorrect date! Please enter again.");
+            }
+        } while (!validDate);
+
         return result;
     }
 
