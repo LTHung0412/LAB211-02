@@ -5,16 +5,14 @@
  */
 package sample.dto;
 
-import java.util.List;
-import sample.model.Flight;
+import sample.controller.CrewAssignmentList;
+import sample.controller.FlightList;
 
 /**
  *
  * @author LENOVO
  */
-public interface I_FlightList {
+public interface I_CrewAssignmentList {
 
-    void flightSchelduleManagement();
-
-    void displayFlightInfor(List<Flight> listFlight);
+    void crewManagementAndAssignments(FlightList flightList, CrewAssignmentList crewAssignmentList);
 }

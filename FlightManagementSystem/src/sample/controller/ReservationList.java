@@ -3,18 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sample.dto;
+package sample.controller;
 
-import java.util.List;
-import sample.model.Flight;
+import java.util.ArrayList;
+import sample.model.Reservation;
 
 /**
  *
  * @author LENOVO
  */
-public interface I_FlightList {
+public class ReservationList extends ArrayList<Reservation> {
 
-    void flightSchelduleManagement();
-
-    void displayFlightInfor(List<Flight> listFlight);
 }
