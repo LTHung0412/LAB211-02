@@ -5,11 +5,7 @@
  */
 package sample.controller;
 
-import sample.model.BoardingPass;
-import sample.model.CrewAssignment;
 import sample.model.Flight;
-import sample.model.Passenger;
-import sample.model.Reservation;
 import sample.utils.Utils;
 import java.util.List;
 import java.util.ArrayList;
@@ -22,11 +18,6 @@ import sample.dto.I_FlightList;
  * @author LENOVO
  */
 public class FlightList extends ArrayList<Flight> implements I_FlightList {
-
-    List<Passenger> passengerList = new ArrayList<>();
-    List<Reservation> reservationList = new ArrayList<>();
-    List<BoardingPass> boardingPassList = new ArrayList<>();
-    List<CrewAssignment> crewAssignmentList = new ArrayList<>();
 
     @Override
     public void flightSchelduleManagement() {
