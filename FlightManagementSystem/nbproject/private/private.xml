@@ -12,15 +12,18 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/controller/FlightList.java</file>
-            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/model/Passenger.java</file>
-            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/model/CrewAssignment.java</file>
-            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/controller/Menu.java</file>
-            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/model/Flight.java</file>
-            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/model/Reservation.java</file>
-            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/controller/FileList.java</file>
+            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/controller/ReservationList.java</file>
+            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/dto/I_ReservationList.java</file>
+            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/dto/Flight.java</file>
+            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/dto/Reservation.java</file>
+            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/dto/CrewAssignment.java</file>
             <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/service/ServiceManager.java</file>
-            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/utils/Utils.java</file>
+            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/controller/FileList.java</file>
+            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/controller/FlightList.java</file>
+            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/dto/I_Menu.java</file>
+            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/controller/CrewAssignmentList.java</file>
+            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/dto/Passenger.java</file>
+            <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/dto/I_CrewAssignmentList.java</file>
             <file>file:/D:/Code/Project/Github/LAB211/2/LAB211-02/FlightManagementSystem/src/sample/view/FlightManagement.java</file>
         </group>
     </open-files>

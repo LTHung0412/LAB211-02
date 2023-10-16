@@ -7,8 +7,8 @@ package sample.controller;
 
 import java.util.ArrayList;
 import sample.dto.I_CrewAssignmentList;
-import sample.model.CrewAssignment;
-import sample.model.Flight;
+import sample.dto.CrewAssignment;
+import sample.dto.Flight;
 import sample.utils.Utils;
 
 /**

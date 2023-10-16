@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sample.model;
+package sample.dto;
 
 import java.io.Serializable;
 
@@ -11,8 +11,9 @@ import java.io.Serializable;
  *
  * @author LENOVO
  */
-public class Passenger implements Serializable{
+public class Passenger implements Serializable {
 
+    private String id;
     private String name;
     private String contactDetail;
 
@@ -20,9 +21,18 @@ public class Passenger implements Serializable{
 
     }
 
-    public Passenger(String name, String contactDetail) {
+    public Passenger(String id, String name, String contactDetail) {
+        this.id = id;
         this.name = name;
         this.contactDetail = contactDetail;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -43,7 +53,7 @@ public class Passenger implements Serializable{
 
     @Override
     public String toString() {
-        return "Passenger{" + "name = " + name + ", contactDetail = " + contactDetail + '}';
+        return "Passenger{" + "id=" + id + ", name=" + name + ", contactDetail=" + contactDetail + '}';
     }
-    
+
 }

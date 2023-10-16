@@ -23,6 +23,8 @@ public interface I_Service {
 
     void printAllListsFromFile();
 
+    void printBookedPassengers();
+
     void createLayout();
 
 }

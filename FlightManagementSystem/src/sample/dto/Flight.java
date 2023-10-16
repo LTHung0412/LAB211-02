@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sample.model;
+package sample.dto;
 
 import java.io.Serializable;
 
@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class Flight implements Serializable {
 
-    private String number;  //Fxxxx (Ex: F0001)
+    private String number;                      //Fxxxx (Ex: F0001)
     private String departureCity;
     private String destinationCity;
     private String departureTime;

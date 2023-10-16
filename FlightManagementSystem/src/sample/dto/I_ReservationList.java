@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sample.controller;
-
-import java.util.ArrayList;
-import sample.dto.BoardingPass;
+package sample.dto;
 
 /**
  *
  * @author LENOVO
  */
-public class BoardingPassList extends ArrayList<BoardingPass> {
+public interface I_ReservationList {
 
+    void printBookedPassengers();
 }

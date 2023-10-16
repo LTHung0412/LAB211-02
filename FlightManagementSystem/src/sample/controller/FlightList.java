@@ -5,7 +5,7 @@
  */
 package sample.controller;
 
-import sample.model.Flight;
+import sample.dto.Flight;
 import sample.utils.Utils;
 import java.util.List;
 import java.util.ArrayList;

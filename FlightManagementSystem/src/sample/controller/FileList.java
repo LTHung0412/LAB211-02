@@ -16,11 +16,11 @@ import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sample.dto.I_FileList;
-import sample.model.CrewAssignment;
-import sample.model.Flight;
-import sample.model.Passenger;
-import sample.model.Reservation;
-import sample.model.BoardingPass;
+import sample.dto.CrewAssignment;
+import sample.dto.Flight;
+import sample.dto.Passenger;
+import sample.dto.Reservation;
+import sample.dto.BoardingPass;
 
 /**
  *

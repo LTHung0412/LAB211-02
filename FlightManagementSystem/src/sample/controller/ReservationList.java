@@ -6,12 +6,20 @@
 package sample.controller;
 
 import java.util.ArrayList;
-import sample.model.Reservation;
+import sample.dto.I_ReservationList;
+import sample.dto.Reservation;
 
 /**
  *
  * @author LENOVO
  */
-public class ReservationList extends ArrayList<Reservation> {
+public class ReservationList extends ArrayList<Reservation> implements I_ReservationList {
+
+    @Override
+    public void printBookedPassengers() {
+        for (Reservation r : this) {
+            System.out.println(r.getPassenger().getName());
+        }
+    }
 
 }

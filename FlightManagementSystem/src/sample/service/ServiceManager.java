@@ -62,6 +62,11 @@ public class ServiceManager implements I_Service {
     }
 
     @Override
+    public void printBookedPassengers() {
+        reservationList.printBookedPassengers();
+    }
+
+    @Override
     public void createLayout() {
         try {
             fileList.load(flightList, passengerList, crewAssignmentList, reservationList, boardingPassList);
@@ -75,7 +80,8 @@ public class ServiceManager implements I_Service {
         menu.addItem("4. Crew management and assignments.");
         menu.addItem("5. Data storage for flight details, reservations, and assignments.");
         menu.addItem("6. Print all Flight information: ");
-        menu.addItem("7. Quit.");
+        menu.addItem("7. Print booked passengers: ");
+        menu.addItem("8. Quit.");
         int choice;
         boolean cont = false;
         do {
@@ -102,6 +108,8 @@ public class ServiceManager implements I_Service {
                     printAllListsFromFile();
                     break;
                 case 7:
+                    printBookedPassengers();
+                case 8:
                     cont = menu.confirmYesNo("Do you want to quit? (Y/N): ");
                     break;
             }

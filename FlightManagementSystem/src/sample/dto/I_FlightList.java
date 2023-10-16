@@ -6,7 +6,6 @@
 package sample.dto;
 
 import java.util.List;
-import sample.model.Flight;
 
 /**
  *

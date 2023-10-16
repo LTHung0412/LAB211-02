@@ -8,10 +8,10 @@ package sample.controller;
 import java.util.ArrayList;
 import java.util.List;
 import sample.dto.I_PassengerList;
-import sample.model.BoardingPass;
-import sample.model.Flight;
-import sample.model.Passenger;
-import sample.model.Reservation;
+import sample.dto.BoardingPass;
+import sample.dto.Flight;
+import sample.dto.Passenger;
+import sample.dto.Reservation;
 import sample.utils.Utils;
 
 /**
@@ -43,18 +43,25 @@ public class PassengerList extends ArrayList<Passenger> implements I_PassengerLi
 
         String passengerName = Utils.getString("Input name: ");
         String passengerContactDetail = Utils.getString("Input contact detail: ");
-        Passenger nPassenger = new Passenger(passengerName, passengerContactDetail);
+        String passengerID = "";
+        passengerID += "P";
+        int p_end_code = this.size() + 1;
+        int p_number_zero = 4 - (p_end_code + "").length();
+        for (int i = 1; i <= p_number_zero; i++) {
+            passengerID += "0";
+        }
+        passengerID += p_end_code;
+        Passenger nPassenger = new Passenger(passengerID, passengerName, passengerContactDetail);
         this.add(nPassenger);
 
         String reservationID = "";
         reservationID += "R";
-        int end_code = reservationList.size() + 1;
-        int number_zero = 4 - (end_code + "").length();
-        for (int i = 1; i <= number_zero; i++) {
+        int r_end_code = reservationList.size() + 1;
+        int r_number_zero = 4 - (r_end_code + "").length();
+        for (int i = 1; i <= r_number_zero; i++) {
             reservationID += "0";
         }
-        reservationID += end_code;
-
+        reservationID += r_end_code;
         Reservation nReservation = new Reservation(nPassenger, availableFlights.get(choice - 1), reservationID);
         reservationList.add(nReservation);
 

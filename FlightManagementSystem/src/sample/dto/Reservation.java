@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sample.model;
+package sample.dto;
 
 import java.io.Serializable;
 
@@ -11,13 +11,16 @@ import java.io.Serializable;
  *
  * @author LENOVO
  */
-public class BoardingPass implements Serializable{
+public class Reservation implements Serializable{
+
     private Passenger passenger;
     private Flight flight;
+    private String reservationID;
 
-    public BoardingPass(Passenger passenger, Flight flight) {
+    public Reservation(Passenger passenger, Flight flight, String reservationID) {
         this.passenger = passenger;
         this.flight = flight;
+        this.reservationID = reservationID;
     }
 
     public Passenger getPassenger() {
@@ -35,5 +38,13 @@ public class BoardingPass implements Serializable{
     public void setFlight(Flight flight) {
         this.flight = flight;
     }
-    
+
+    public String getReservationID() {
+        return reservationID;
+    }
+
+    public void setReservationID(String reservationID) {
+        this.reservationID = reservationID;
+    }
+
 }
