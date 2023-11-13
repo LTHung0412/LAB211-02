@@ -19,10 +19,10 @@ public class CrewAssignmentList extends ArrayList<CrewAssignment> implements I_C
 
     @Override
     public void crewManagementAndAssignments(FlightList flightList, CrewAssignmentList crewAssignmentList) {
-        addCrewAssignments(flightList, crewAssignmentList);
+        add(flightList, crewAssignmentList);
     }
 
-    public void addCrewAssignments(FlightList flightList, CrewAssignmentList crewAssignmentList) {
+    public void add(FlightList flightList, CrewAssignmentList crewAssignmentList) {
         boolean check = false;
         do {
             boolean hasFound = false;
