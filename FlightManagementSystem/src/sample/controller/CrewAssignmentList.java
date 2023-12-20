@@ -30,7 +30,7 @@ public class CrewAssignmentList extends ArrayList<CrewAssignment> implements I_C
             for (Flight f : flightList) {
                 if (f.getNumber().equals(nFlightNum)) {
                     hasFound = true;
-                    int nPilots = Utils.getInt("Ïnput number of pilots (MAX=2): ", 1, 2);
+                    int nPilots = Utils.getInt("Input number of pilots (MAX=2): ", 1, 2);
                     int nFlightAttendants = Utils.getInt("Input number of flight attendants (MAX=10): ", 1, 10);
                     int nGroundStaffs = Utils.getInt("Input number of ground staffs (MAX=20): ", 1, 20);
                     CrewAssignment nCrewAssignment = new CrewAssignment(f, nPilots, nFlightAttendants, nGroundStaffs);
